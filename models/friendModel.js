@@ -7,7 +7,7 @@ const FrinendSchema = new mongoose.Schema({
  }, {
   toJSON: {virtuals: true} ,
   timestamps: true,
-  collection: 'Comment'
+  collection: 'Friend'
 });
 
 // postSchema.virtual('User', { 
@@ -16,6 +16,6 @@ const FrinendSchema = new mongoose.Schema({
 //   foreignField: 'post' //post ฟิลด์ของโมเดล Comment (fk)
 // })
 
-const friend = mongoose.model('Frinend', FrinendSchema );
+const friend = mongoose.model('Friend', FrinendSchema );
 
 module.exports = friend;

@@ -26,7 +26,6 @@ module.exports.signup = async (req, res, next) => {
 
         let user = new User();
         user.name = name;
-        user.email = email;
         user.username = username;
         user.password = await user.encryptPassword(password);
 
