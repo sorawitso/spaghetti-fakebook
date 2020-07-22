@@ -47,8 +47,7 @@ module.exports.updatePost = async (req, res) => {
             { text: text }
         );
 
-        // console.log(post);
-
+ 
         if (post.nModified === 0) {
             throw new Error('Cannot update');
         } else {

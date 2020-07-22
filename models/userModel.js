@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   name : { type: String, required: true, trim: true },
   username : { type: String , required: true, trim: true },
   password : { type: String , required: true , trim: true , minlength : 3 } ,
+  picture : {type : String , default : '' } , 
   isDelete : { type: Boolean , default : false  } 
 }, {
   toJSON: {virtuals: true} ,

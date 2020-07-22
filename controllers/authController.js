@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const config = require('../config/index') ; 
 
 module.exports.signup = async (req, res, next) => {
     try {

@@ -1,5 +1,8 @@
 const express = require('express');
-const path = require('path');
+const path = require('path'); 
+
+const swaggerUi = require('swagger-ui-express'); 
+const swaggerDocument = require('./swagger.json');
 
 //const helmet = require('helmet');
 //const rateLimit = require("express-rate-limit");
@@ -18,6 +21,7 @@ const authRoute = require('./routes/authRoute');
 //const postRoute = require('./routes/postRoute');
 
 const app = express();
+const router = express.Router() ; 
 
 //console.log(process.env);
 if (process.env.NODE_ENV === 'development') {
@@ -43,6 +47,10 @@ app.use('/api/auth', authRoute);
 // app.use('/api/post', postRoute);
 
 app.use(errorHandler);
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api/v1', router);
 
 app.listen(config.PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${config.PORT}`));
 
