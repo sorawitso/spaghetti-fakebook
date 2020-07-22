@@ -1,12 +1,6 @@
 
 const Post = require('../models/postModel');
 
-const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-
-const config = require('../config/index') ; 
-
-
 module.exports.index = async (req, res, next) => {
     try {
         const posts = await Post.find();
@@ -25,6 +19,23 @@ module.exports.getPostById = function (req, res, next) {
     let post = Post.findById(id);
     res.status(200).json(post);
 }
+
+module.exports.createPost = async (req, res) => {
+    const { user_id , text } = req.body ;
+     let post = new Post({
+        user_id : user_id ,
+        text: text
+    });
+
+    try {
+        await post.save();
+        res.status(201).json({ data: post, success: true });
+    } catch (err) {
+        res.status(500).json({
+            errors: { err }
+        });
+    }
+}
  
 
 module.exports.updatePost = async (req, res) => {
@@ -33,7 +44,7 @@ module.exports.updatePost = async (req, res) => {
         const { text } = req.body;
 
         const post = await Post.updateOne({ _id : id },
-            { title: title }
+            { text: text }
         );
 
         // console.log(post);
@@ -57,17 +68,28 @@ module.exports.updatePost = async (req, res) => {
     }
 }
 
-module.exports.deleteUser = async function (req, res) {
-    // const token = req.header("authorization");
-    const { id } = req.params;
-    // const id =  req.params.id;
-    console.log(`Id : ${id}`);
-    const user = await findUserById(id);
-    if (user) {
-        console.log(`User has been delete. id : ${user.id}`);
-    } else {
-        console.log(`User is not exits.`);
-        res.status(404).send({ message: "Not found User with id " + id });
+module.exports.deletePost = async function (req, res) {
+    try {
+        const { id } = req.params;
+        const post = await Post.findByIdAndDelete(id);
+        if (!post) {
+            res.status(404).json({
+                success: fasle, errors: {
+                    message: "Cannot delete"
+                }
+            });
+        }
+
+        res.status(200).json({
+            message: 'Deleted have been completed',
+            success: true,
+        });
+    } catch (err) {
+        res.status(500).json({
+            errors: {
+                success: fasle,
+                message: "Cannot delete"
+            }
+        })
     }
-    res.status(200).json({ message: "success" });;
 }
