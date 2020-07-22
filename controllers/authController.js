@@ -3,8 +3,6 @@ const User = require('../models/userModel');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
-const config = require('../config/index') ; 
-
 module.exports.signup = async (req, res, next) => {
     try {
         const { name, username , password } = req.body;
@@ -28,6 +26,7 @@ module.exports.signup = async (req, res, next) => {
 
         let user = new User();
         user.name = name;
+        user.email = email;
         user.username = username;
         user.password = await user.encryptPassword(password);
 
