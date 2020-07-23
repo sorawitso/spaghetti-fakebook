@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const CommentSchema = new mongoose.Schema({
-  user_id : { type: ObjectId , required: true , ref : 'User'  },
-  post_id : { type: ObjectId , required: true , ref : 'Post'  },
-  text: { type: String , required: true , trim: true }
- }, {
-  toJSON: {virtuals: true} ,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
+  text: { type: String, required: true, trim: true }, 
+}, {
+  toJSON: { virtuals: true },
   timestamps: true,
   collection: 'Comment'
 });
@@ -16,6 +16,6 @@ const CommentSchema = new mongoose.Schema({
 //   foreignField: 'post' //post ฟิลด์ของโมเดล Comment (fk)
 // })
 
-const comment = mongoose.model('Comment', CommentSchema );
+const comment = mongoose.model('Comment', CommentSchema);
 
 module.exports = comment;

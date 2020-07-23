@@ -4,6 +4,7 @@ const postController = require('../controllers/postController');
 const authentication = require('../middleware/authenticationHandler');
 
 router.get('/' , authentication.isLoggedIn , postController.index) ; 
+router.get('/feed' , authentication.isLoggedIn , postController.getPostByUser) ; 
 router.get('/:id' , authentication.isLoggedIn , postController.getPostById) ; 
 router.post('/' , authentication.isLoggedIn, postController.createPost) ; 
 router.put('/:id' , authentication.isLoggedIn , postController.updatePost)

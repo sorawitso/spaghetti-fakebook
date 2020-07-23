@@ -2,6 +2,7 @@
 const Post = require('../models/postModel');
 
 module.exports.index = async (req, res, next) => {
+    
     try {
         const posts = await Post.find();
         res.status(200).json({
@@ -14,14 +15,21 @@ module.exports.index = async (req, res, next) => {
 
 }
 
-module.exports.getPostById = function (req, res, next) {
+module.exports.getPostById = async  (req, res, next) => {
     const {id} = req.params ; 
     let post = Post.findById(id);
     res.status(200).json(post);
 }
 
+module.exports.getPostByUser = async (req, res, next) => {
+    const { _id : user_id } = req.user;
+    let post = await Post.find({user_id : user_id }).exec() ;
+    res.status(200).json(post);
+}
+
 module.exports.createPost = async (req, res) => {
-    const { user_id , text } = req.body ;
+    const { _id : user_id } = req.user; 
+    const { text } = req.body ;
      let post = new Post({
         user_id : user_id ,
         text: text
