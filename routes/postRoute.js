@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const postController = require('../controllers/postController');
+const authentication = require('../middleware/authenticationHandler');
 
-router.get('/', postController.index) ; 
-router.get('/:id', postController.getPostById) ; 
-router.post('/', postController.createPost) ; 
-router.put('/:id', postController.updatePost)
-router.delete('/:id', postController.deletePost ) ;
+router.get('/' , authentication.isLoggedIn , postController.index) ; 
+router.get('/feed' , authentication.isLoggedIn , postController.getPostByUser) ; 
+router.get('/:id' , authentication.isLoggedIn , postController.getPostById) ; 
+router.post('/' , authentication.isLoggedIn, postController.createPost) ; 
+router.put('/:id' , authentication.isLoggedIn , postController.updatePost)
+router.delete('/:id' , authentication.isLoggedIn , postController.deletePost ) ;
 
 module.exports = router
 

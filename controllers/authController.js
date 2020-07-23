@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const config = require('../config/index') ; 
 
 module.exports.signup = async (req, res, next) => {
     try {
@@ -45,7 +46,7 @@ module.exports.signup = async (req, res, next) => {
 exports.signin = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        console.log (`username: ${username}  , password: ${password}`)
+        console.log (`username: ${username} , password: ${password}`)
 
         //validation
         const errors = validationResult(req);
@@ -55,6 +56,7 @@ exports.signin = async (req, res, next) => {
             error.validation = errors.array();
             throw error;
         }
+        
         const user = await User.findOne({ username : username });
         if (!user) {
             const error = new Error('Authentication Failed, User not found');
