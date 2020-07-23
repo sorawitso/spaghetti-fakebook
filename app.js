@@ -11,6 +11,8 @@ const swaggerDocument = require('./swagger.json');
 const passport = require('passport');
 const logger = require('morgan');
 
+const cors = require('cors'); 
+
 const { logHandler } = require('./middleware/logHandler');
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -30,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(logger('dev'))
 app.use(logHandler);
-
+app.use(cors()) ; 
 connectDB(); 
  
 app.use(express.json());
