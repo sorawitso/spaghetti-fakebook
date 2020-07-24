@@ -3,7 +3,7 @@ const router = express.Router()
 const userController= require('../controllers/userController');
 
 
-router.get('/me' , authController.signup , userController.index) ;  
+// router.get('/me' , authController.signup , userController.index) ;  
 
 
 // router.get('/:id', isLoggedIn ,  userController.getUserById) ; 
