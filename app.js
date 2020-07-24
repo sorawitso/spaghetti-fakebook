@@ -20,7 +20,12 @@ const config = require('./config/index');
 const connectDB = require('./config/db')
 
 const authRoute = require('./routes/authRoute');
+const feedRoute = require('./routes/feedRoute');
 const postRoute = require('./routes/postRoute');
+const commentRoute = require('./routes/commentRoute');
+const profileRoute = require('./routes/profileRoute');
+
+require('./models/commentModel');
 
 const app = express();
 const router = express.Router() ; 
@@ -33,7 +38,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(logger('dev'))
 app.use(logHandler);
 app.use(cors()) ; 
-connectDB(); 
+connectDB();  
  
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,7 +50,12 @@ app.use(passport.initialize());
 
 
 app.use('/api/auth', authRoute); 
-// app.use('/api/user', userRoute);
+app.use('/api/feed', feedRoute);
+app.use('/api/post', postRoute);
+app.use('/api/comment', commentRoute );
+app.use('/api/profile', profileRoute );
+
+// app.use('/api/user', userRoute); 
 // app.use('/api/post', postRoute);
 
 app.use(errorHandler);

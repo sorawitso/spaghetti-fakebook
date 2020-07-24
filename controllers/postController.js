@@ -28,7 +28,7 @@ module.exports.getPostByUser = async (req, res, next) => {
 }
 
 module.exports.createPost = async (req, res) => {
-    const { _id : user_id } = req.user; 
+    const { _id : user_id } = req.user ; 
     const { text } = req.body ;
      let post = new Post({
         user_id : user_id ,
@@ -37,11 +37,9 @@ module.exports.createPost = async (req, res) => {
 
     try {
         await post.save();
-        res.status(201).json({ data: post, success: true });
+        res.status(201).json({ data: post , success: true , msg : '' });
     } catch (err) {
-        res.status(500).json({
-            errors: { err }
-        });
+        res.status(500).json({  errors: { err } });
     }
 }
  
